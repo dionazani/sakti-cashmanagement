@@ -4,12 +4,15 @@ import (
 	"encoding/json"
 	"net/http"
 	model "sakti-cashmanagement/model"
+	"strconv"
 )
 
-func Save(response http.ResponseWriter, request *http.Request) {
+func AddNew(response http.ResponseWriter, request *http.Request) {
 
 	var callbackPaymentModel model.CallbackPaymentModel
 	var appResponseModel model.AppResponseModel
+	var id int64 = 0
+	data := map[string]string{}
 
 	err := json.NewDecoder(request.Body).Decode(&callbackPaymentModel)
 	if err != nil {
@@ -19,7 +22,8 @@ func Save(response http.ResponseWriter, request *http.Request) {
 
 	var result string = ""
 	if callbackPaymentModel.Id == 0 {
-		result = AddNew(callbackPaymentModel)
+		result, id = Insert(callbackPaymentModel)
+		data["callbackPaymentId"] = strconv.FormatInt(id, 10)
 	}
 
 	if len(result) > 0 {
@@ -27,19 +31,19 @@ func Save(response http.ResponseWriter, request *http.Request) {
 		appResponseModel.Status = "001"
 		appResponseModel.Message = result
 
-		response.WriteHeader(http.StatusInternalServerError)
 		response.Header().Set("Content-Type", "application/json")
+		response.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(response).Encode(appResponseModel)
 
 	} else {
 
 		appResponseModel.Status = "000"
 		appResponseModel.Message = ""
+		appResponseModel.Data = data
 
-		response.WriteHeader(http.StatusOK)
 		response.Header().Set("Content-Type", "application/json")
+		response.WriteHeader(http.StatusOK)
 		json.NewEncoder(response).Encode(appResponseModel)
-
 	}
 
 	return

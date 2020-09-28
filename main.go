@@ -13,7 +13,7 @@ func main() {
 	router := mux.NewRouter()
 
 	/* BNI */
-	router.HandleFunc("/sakti-cashmanagement/api/v1/bni-callback", bniCallback.Save).Methods("POST")
+	router.HandleFunc("/sakti-cashmanagement/api/v1/bni-callback", bniCallback.AddNew).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":10000", router))
 

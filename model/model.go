@@ -1,9 +1,9 @@
 package model
 
 type AppResponseModel struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
-	Data    string `json:"data"`
+	Status  string            `json:"status"`
+	Message string            `json:"message"`
+	Data    map[string]string `json:"data"`
 }
 
 type CallbackPaymentModel struct {
