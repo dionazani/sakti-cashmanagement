@@ -9,22 +9,21 @@ import (
 
 func AddNew(response http.ResponseWriter, request *http.Request) {
 
-	var callbackPaymentModel model.CallbackPaymentModel
+	var callbackBniModel model.CallbackBniModel
 	var appResponseModel model.AppResponseModel
 	var id int64 = 0
 	data := map[string]string{}
 
-	err := json.NewDecoder(request.Body).Decode(&callbackPaymentModel)
+	err := json.NewDecoder(request.Body).Decode(&callbackBniModel)
 	if err != nil {
 		http.Error(response, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	var result string = ""
-	if callbackPaymentModel.Id == 0 {
-		result, id = Insert(callbackPaymentModel)
-		data["callbackPaymentId"] = strconv.FormatInt(id, 10)
-	}
+
+	result, id = Insert(callbackBniModel)
+	data["callbackPaymentId"] = strconv.FormatInt(id, 10)
 
 	if len(result) > 0 {
 
