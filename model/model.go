@@ -6,19 +6,10 @@ type AppResponseModel struct {
 	Data    map[string]string `json:"data"`
 }
 
-type CallbackPaymentModel struct {
-	Id              int32   `json:"id"`
-	PartnerCode     string  `json:"partner"`
-	ReferenceNumber string  `json:"referenceNumber"`
-	AccountNumber   string  `json:"vaNumber"`
-	Amount          float32 `json:"amount"`
-	Step            string  `json:"step"`
-	CreatedAt       string  `json:"createdAt"`
-	UpdatedAt       string  `json:"updatedAt"`
-}
-
 type CallbackBniModel struct {
-	TrxId         string  `json:"trxId`
-	AccountNumber string  `json:"accountNumber"`
-	Amount        float32 `json:"amount"`
+	TrxId           string  `json:"trxId`
+	AccountNumber   string  `json:"accountNumber"`
+	Amount          float32 `json:"amount"`
+	ReferenceNumber string  `json:"referenceNumber"`
+	TransactionDate string  `json:"transactionDate"`
 }
